@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Spark
+metastore_db/
+spark-warehouse/
+derby.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Charts output
+charts/
+*.png
+*.jpg
+
+# Large log files (optional - 如果不想上传大文件)
+# sample_logs/*.log
