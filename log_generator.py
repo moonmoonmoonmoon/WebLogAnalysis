@@ -169,9 +169,9 @@ class SyntheticLogGenerator:
                 f.write(log_entry + '\n')
                 
                 if (i + 1) % 1000 == 0:
-                    print(f"  Generated {i+1:,}/{num_requests:,} entries...", end='\r')
+                    print(f"Generated {i+1:,}/{num_requests:,} entries.", end='\r')
         
-        print(f"\n✓ Normal traffic saved to: {output_file}")
+        print(f"\nNormal traffic saved to: {output_file}")
     
     def generate_ddos_attack(self, output_file, attacker_ips, num_requests=5000,
                             start_time=None, duration_minutes=10):
@@ -209,7 +209,7 @@ class SyntheticLogGenerator:
                 )
                 f.write(log_entry + '\n')
         
-        print(f"✓ DDoS attack logs saved to: {output_file}")
+        print(f"DDoS attack logs saved to: {output_file}")
     
     def generate_mixed_traffic(self, output_file, total_requests=15000,
                               attack_ratio=0.3, start_time=None):
@@ -223,8 +223,8 @@ class SyntheticLogGenerator:
             start_time (datetime): Start timestamp
         """
         print(f"\nGenerating mixed traffic: {total_requests:,} total requests")
-        print(f"  Normal traffic: {int(total_requests * (1-attack_ratio)):,} requests")
-        print(f"  Attack traffic: {int(total_requests * attack_ratio):,} requests")
+        print(f"Normal traffic: {int(total_requests * (1-attack_ratio)):,} requests")
+        print(f"Attack traffic: {int(total_requests * attack_ratio):,} requests")
         
         if start_time is None:
             start_time = datetime.now() - timedelta(hours=2)
@@ -264,21 +264,16 @@ class SyntheticLogGenerator:
                 f.write(log_entry + '\n')
                 
                 if (i + 1) % 1000 == 0:
-                    print(f"  Generated {i+1:,}/{total_requests:,} entries...", end='\r')
+                    print(f"Generated {i+1:,}/{total_requests:,} entries.", end='\r')
         
-        print(f"\n✓ Mixed traffic saved to: {output_file}")
-        print(f"  Attack window: {attack_start:.0f}s - {attack_start + attack_duration:.0f}s")
-        print(f"  Attacker IPs: {', '.join(attacker_ips[:5])}...")
+        print(f"\nMixed traffic saved to: {output_file}")
+        print(f"Attack window: {attack_start:.0f}s - {attack_start + attack_duration:.0f}s")
+        print(f"Attacker IPs: {', '.join(attacker_ips[:5])}...")
 
 
 def main():
     """Generate sample datasets for milestone demonstration"""
-    print("""
-    ╔══════════════════════════════════════════════════════════════╗
-    ║   Synthetic Web Log Generator                                ║
-    ║   Creating sample datasets for milestone evaluation          ║
-    ╚══════════════════════════════════════════════════════════════╝
-    """)
+    print("""Synthetic Web Log Generator. Creating sample datasets for evaluation """)
     
     # Create output directory
     os.makedirs('sample_logs', exist_ok=True)
@@ -301,13 +296,13 @@ def main():
         attack_ratio=0.3
     )
     
-    print("\n" + "="*60)
-    print("✓ All sample datasets generated successfully!")
-    print("="*60)
+    print("\n" + "-"*60)
+    print("All sample datasets generated successfully!")
+    print("-"*60)
     print("\nGenerated files:")
     for f in os.listdir('sample_logs'):
         size = os.path.getsize(f'sample_logs/{f}') / (1024 * 1024)
-        print(f"  - sample_logs/{f} ({size:.2f} MB)")
+        print(f"- sample_logs/{f} ({size:.2f} MB)")
 
 
 if __name__ == "__main__":

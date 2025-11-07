@@ -1,7 +1,5 @@
 """
 Distributed Web Log Analysis with Anomaly Detection
-Systems for Data Science - Final Project
-Team: Weidong Wang, Yanan Zhang, Yuxin Sun, Zhehuan Chen
 
 This module implements a PySpark-based web log analyzer with anomaly detection capabilities.
 """
@@ -41,7 +39,7 @@ class WebLogAnalyzer:
         
         self.spark.sparkContext.setLogLevel("WARN")
         self.df = None
-        print(f"✓ Spark session initialized: {app_name}")
+        print(f"Spark session initialized: {app_name}")
     
     def parse_apache_log(self, log_path):
         """
@@ -54,13 +52,13 @@ class WebLogAnalyzer:
         Returns:
             DataFrame: Parsed log data
         """
-        print(f"\n{'='*60}")
-        print(f"GOAL 1: Parsing Web Server Logs")
-        print(f"{'='*60}")
+        print(f"\n{'-'*60}")
+        print(f"1. Parsing Web Server Logs")
+        print(f"{'-'*60}")
         
         # Read raw log files
         raw_logs = self.spark.read.text(log_path)
-        print(f"✓ Loaded raw logs from: {log_path}")
+        print(f"Loaded raw logs from: {log_path}")
         
         # Apache Common Log Format with extensions
         # Example: 192.168.1.1 - - [01/Nov/2025:10:30:45 +0000] "GET /api/users HTTP/1.1" 200 1234 0.123
@@ -91,8 +89,8 @@ class WebLogAnalyzer:
         self.df = parsed_df.cache()
         
         row_count = self.df.count()
-        print(f"✓ Successfully parsed {row_count:,} log entries")
-        print(f"✓ Extracted fields: ip, timestamp, method, url, status, bytes, response_time")
+        print(f"Successfully parsed {row_count:,} log entries")
+        print(f"Extracted fields: ip, timestamp, method, url, status, bytes, response_time")
         
         # Show sample records
         print("\nSample parsed records:")
@@ -111,9 +109,9 @@ class WebLogAnalyzer:
         Returns:
             dict: Dictionary containing all statistics
         """
-        print(f"\n{'='*60}")
-        print(f"GOAL 2: Computing Basic Analytics")
-        print(f"{'='*60}")
+        print(f"\n{'-'*60}")
+        print(f"2. Computing Basic Analytics")
+        print(f"{'-'*60}")
         
         if self.df is None:
             raise ValueError("No data loaded. Run parse_apache_log() first.")
@@ -128,7 +126,7 @@ class WebLogAnalyzer:
             .limit(20)
         
         stats['top_urls'] = top_urls
-        print(f"✓ Top-20 URLs computed")
+        print(f"Top-20 URLs computed")
         print("\nTop 10 URLs:")
         top_urls.show(10, truncate=50)
         
@@ -140,7 +138,7 @@ class WebLogAnalyzer:
             .limit(20)
         
         stats['top_ips'] = top_ips
-        print(f"✓ Top-20 IPs computed")
+        print(f"Top-20 IPs computed")
         print("\nTop 10 IPs:")
         top_ips.show(10)
         
@@ -151,7 +149,7 @@ class WebLogAnalyzer:
             .orderBy('status')
         
         stats['status_distribution'] = status_dist
-        print(f"✓ HTTP Status Code Distribution computed")
+        print(f"HTTP Status Code Distribution computed")
         print("\nStatus Code Distribution:")
         status_dist.show()
         
@@ -193,9 +191,9 @@ class WebLogAnalyzer:
         Returns:
             dict: Dictionary containing anomaly detection results
         """
-        print(f"\n{'='*60}")
-        print(f"GOAL 3: Detecting Traffic Anomalies")
-        print(f"{'='*60}")
+        print(f"\n{'-'*60}")
+        print(f"3. Detecting Traffic Anomalies")
+        print(f"{'-'*60}")
         
         if self.df is None:
             raise ValueError("No data loaded. Run parse_apache_log() first.")
@@ -203,7 +201,7 @@ class WebLogAnalyzer:
         anomalies = {}
         
         # High-volume IP detection
-        print(f"\n[1/2] Detecting High-Volume IPs (threshold: {ip_threshold} requests)...")
+        print(f"\n[1/2] Detecting High-Volume IPs (threshold: {ip_threshold} requests).")
         ip_stats = self.df.groupBy('ip') \
             .agg(
                 count('*').alias('total_requests'),
@@ -216,7 +214,7 @@ class WebLogAnalyzer:
         
         anomalies['high_volume_ips'] = high_volume_ips
         high_volume_count = high_volume_ips.count()
-        print(f"✓ Found {high_volume_count} high-volume IPs")
+        print(f"Found {high_volume_count} high-volume IPs")
         
         if high_volume_count > 0:
             print(f"\nTop High-Volume IPs:")
@@ -231,18 +229,18 @@ class WebLogAnalyzer:
         
         anomalies['high_error_ips'] = high_error_ips
         high_error_count = high_error_ips.count()
-        print(f"✓ Found {high_error_count} high error rate IPs")
+        print(f"Found {high_error_count} high error rate IPs")
         
         if high_error_count > 0:
             print(f"\nTop High Error Rate IPs:")
             high_error_ips.show(10)
         
-        print(f"\n{'='*60}")
+        print(f"\n{'-'*60}")
         print(f"Anomaly Detection Summary:")
-        print(f"{'='*60}")
+        print(f"{'-'*60}")
         print(f"High-Volume IPs:       {high_volume_count}")
         print(f"High Error Rate IPs:   {high_error_count}")
-        print(f"{'='*60}")
+        print(f"{'-'*60}")
         
         return anomalies
     
@@ -250,7 +248,7 @@ class WebLogAnalyzer:
         """Stop the Spark session"""
         if self.spark:
             self.spark.stop()
-            print("\n✓ Spark session stopped")
+            print("\nSpark session stopped")
 
 
 def main():
@@ -258,11 +256,7 @@ def main():
     Main execution function demonstrating the complete workflow
     """
     print("""
-    ╔══════════════════════════════════════════════════════════════╗
-    ║   Distributed Web Log Analysis System                        ║
-    ║   Systems for Data Science - Final Project                   ║
-    ║   Team: Wang, Zhang, Sun, Chen                               ║
-    ╚══════════════════════════════════════════════════════════════╝
+        Distributed Web Log Analysis System   
     """)
     
     # Initialize analyzer
@@ -272,19 +266,19 @@ def main():
         # Check for log files
         log_path = "sample_logs/*.log"
         
-        # GOAL 1: Parse logs
+        # 1: Parse logs
         df = analyzer.parse_apache_log(log_path)
         
-        # GOAL 2: Basic statistics
+        # 2: Basic statistics
         stats = analyzer.compute_basic_statistics()
         
-        # GOAL 3: Anomaly detection
+        # 3: Anomaly detection
         anomalies = analyzer.detect_anomalies(ip_threshold=100, error_rate_threshold=0.3)
         
-        print("\n✓ All milestone goals executed successfully!")
+        print("\nAll milestone goals executed successfully!")
         
     except Exception as e:
-        print(f"\n✗ Error: {e}")
+        print(f"\nError: {e}")
         raise
     finally:
         analyzer.stop()

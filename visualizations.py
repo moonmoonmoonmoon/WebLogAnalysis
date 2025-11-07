@@ -31,7 +31,7 @@ class LogVisualizer:
         plt.rcParams['figure.figsize'] = (10, 6)
         plt.rcParams['font.size'] = 10
         
-        print(f"✓ Visualizer initialized, charts will be saved to: {output_dir}/")
+        print(f"Visualizer initialized, charts will be saved to: {output_dir}/")
     
     def plot_status_distribution(self, status_df, output_file='status_distribution.png'):
         """
@@ -41,7 +41,7 @@ class LogVisualizer:
             status_df: PySpark DataFrame with columns [status, count]
             output_file (str): Output filename
         """
-        print(f"\nGenerating status code distribution chart...")
+        print(f"\nGenerating status code distribution chart.")
         
         # Convert to pandas for plotting
         pdf = status_df.toPandas()
@@ -81,7 +81,7 @@ class LogVisualizer:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"✓ Chart saved: {output_path}")
+        print(f"Chart saved: {output_path}")
     
     def plot_top_urls(self, urls_df, top_n=20, output_file='top_urls.png'):
         """
@@ -128,7 +128,7 @@ class LogVisualizer:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"✓ Chart saved: {output_path}")
+        print(f"Chart saved: {output_path}")
     
     def plot_top_ips(self, ips_df, top_n=20, output_file='top_ips.png'):
         """
@@ -139,7 +139,7 @@ class LogVisualizer:
             top_n (int): Number of top IPs to show
             output_file (str): Output filename
         """
-        print(f"\nGenerating top-{top_n} IPs chart...")
+        print(f"\nGenerating top-{top_n} IPs chart.")
         
         # Convert to pandas
         pdf = ips_df.limit(top_n).toPandas()
@@ -186,7 +186,7 @@ class LogVisualizer:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"✓ Chart saved: {output_path}")
+        print(f"Chart saved: {output_path}")
     
     def plot_anomalous_ips_table(self, anomaly_df, top_n=10, output_file='anomalous_ips_table.png'):
         """
@@ -197,7 +197,7 @@ class LogVisualizer:
             top_n (int): Number of IPs to display
             output_file (str): Output filename
         """
-        print(f"\nGenerating anomalous IPs table...")
+        print(f"\nGenerating anomalous IPs table.")
         
         # Convert to pandas
         pdf = anomaly_df.limit(top_n).toPandas()
@@ -259,7 +259,7 @@ class LogVisualizer:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"✓ Table saved: {output_path}")
+        print(f"Table saved: {output_path}")
     
     def plot_parsing_performance(self, file_sizes_mb, runtimes_sec, output_file='parsing_runtime.png'):
         """
@@ -302,27 +302,25 @@ class LogVisualizer:
         plt.savefig(output_path, dpi=300, bbox_inches='tight')
         plt.close()
         
-        print(f"✓ Chart saved: {output_path}")
+        print(f"Chart saved: {output_path}")
 
 
 def main():
     """Demo visualization generation"""
     print("""
-    ╔══════════════════════════════════════════════════════════════╗
-    ║   Log Analysis Visualization Module                          ║
-    ║   Generating sample charts for milestone                     ║
-    ╚══════════════════════════════════════════════════════════════╝
+        Log Analysis Visualization Module                          
+        Generating sample charts for milestone
     """)
     
     visualizer = LogVisualizer()
     
     # Demo: Create sample performance chart
-    print("\nGenerating sample performance chart...")
+    print("\nGenerating sample performance chart.")
     file_sizes = [10, 50, 100]
     runtimes = [2.3, 8.5, 15.2]
     visualizer.plot_parsing_performance(file_sizes, runtimes)
     
-    print("\n✓ Visualization module ready for use!")
+    print("\n Visualization module ready for use!")
 
 
 if __name__ == "__main__":
