@@ -1,8 +1,3 @@
-"""
-Complete Milestone Demo Script
-Demonstrates all implemented goals for the milestone submission
-"""
-
 import time
 import os
 import sys
@@ -19,16 +14,8 @@ def main():
     print("""
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║    DISTRIBUTED WEB LOG ANALYSIS WITH ANOMALY DETECTION              ║
-║    Systems for Data Science - Milestone Demonstration               ║
-║                                                                      ║
-║    Team Members:                                                     ║
-║      - Weidong Wang                                                  ║
-║      - Yanan Zhang                                                   ║
-║      - Yuxin Sun                                                     ║
-║      - Zhehuan Chen                                                  ║
-║                                                                      ║
-║    Milestone Due: November 10, 2025                                 ║
+║    DISTRIBUTED WEB LOG ANALYSIS WITH ANOMALY DETECTION               ║
+║    Systems for Data Science                                          ║
 ║                                                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝
     """)
