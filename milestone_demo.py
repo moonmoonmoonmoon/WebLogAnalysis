@@ -26,9 +26,9 @@ def main():
     print("\nGenerating normal traffic log (10MB).")
     start = time.time()
     generator.generate_normal_traffic(
-        'sample_logs/web_10mb.log',
+        output_file='sample_logs/web_10mb.log',
         num_requests=50000,
-        duration_hours=1
+        duration_hours=1,
     )
     gen_time_1 = time.time() - start
     
@@ -36,9 +36,11 @@ def main():
     print("\nGenerating mixed traffic with simulated attacks.")
     start = time.time()
     generator.generate_mixed_traffic(
-        'sample_logs/web_mixed.log',
-        total_requests=30000,
-        attack_ratio=0.3
+        output_file='sample_logs/web_mixed.log',
+        num_requests=30000,
+        duration_hours=2,
+        error_rate=0.8,
+        attack_duration_hours=0.333,
     )
     gen_time_2 = time.time() - start
     
@@ -116,7 +118,7 @@ def main():
         
         print("Log Parser - COMPLETED")
         print(f"  • Implemented PySpark DataFrame parser")
-        print(f"  • Extracts: timestamp, IP, method, URL, status, response_time")
+        print(f"  • Extracts: timestamp, IP, method, URL, status")
         print(f"  • Processed {df.count():,} log entries")
         print(f"  • Runtime: {parse_time:.2f}s")
         

@@ -44,7 +44,7 @@ class WebLogAnalyzer:
     def parse_apache_log(self, log_path):
         """
         Parse Apache/Nginx web server logs using PySpark DataFrames.
-        Extracts: timestamp, IP, method, URL, status, response_time, user_agent
+        Extracts: timestamp, IP, method, URL, status, user_agent
         
         Args:
             log_path (str): Path to log file(s) - supports wildcards
@@ -61,8 +61,8 @@ class WebLogAnalyzer:
         print(f"Loaded raw logs from: {log_path}")
         
         # Apache Common Log Format with extensions
-        # Example: 192.168.1.1 - - [01/Nov/2025:10:30:45 +0000] "GET /api/users HTTP/1.1" 200 1234 0.123
-        log_pattern = r'^(\S+) \S+ \S+ \[([\w:/]+\s[+\-]\d{4})\] "(\S+) (\S+)\s*\S*" (\d{3}) (\d+) ([\d.]+)'
+        # Example: 192.168.1.1 - - [01/Nov/2025:10:30:45 +0000] "GET /api/users HTTP/1.1" 200 1234
+        log_pattern = r'^(\S+) \S+ \S+ \[([\w:/]+\s[+\-]\d{4})\] "(\S+) (\S+)\s*\S*" (\d{3}) (\d+)'
         
         # Extract fields using regex
         parsed_df = raw_logs.select(
@@ -72,7 +72,6 @@ class WebLogAnalyzer:
             regexp_extract('value', log_pattern, 4).alias('url'),
             regexp_extract('value', log_pattern, 5).cast(IntegerType()).alias('status'),
             regexp_extract('value', log_pattern, 6).cast(IntegerType()).alias('bytes'),
-            regexp_extract('value', log_pattern, 7).cast('double').alias('response_time')
         ).filter(col('ip') != '')
         
         # Convert timestamp string to proper timestamp
@@ -90,11 +89,11 @@ class WebLogAnalyzer:
         
         row_count = self.df.count()
         print(f"Successfully parsed {row_count:,} log entries")
-        print(f"Extracted fields: ip, timestamp, method, url, status, bytes, response_time")
+        print(f"Extracted fields: ip, timestamp, method, url, status, bytes")
         
         # Show sample records
         print("\nSample parsed records:")
-        self.df.select('ip', 'timestamp', 'method', 'url', 'status', 'response_time').show(5, truncate=False)
+        self.df.select('ip', 'timestamp', 'method', 'url', 'status').show(5, truncate=False)
         
         return self.df
     
@@ -157,7 +156,6 @@ class WebLogAnalyzer:
         total_requests = self.df.count()
         unique_ips = self.df.select('ip').distinct().count()
         unique_urls = self.df.select('url').distinct().count()
-        avg_response_time = self.df.agg(avg('response_time')).collect()[0][0]
         
         print(f"\n{'='*60}")
         print(f"Summary Statistics:")
@@ -165,14 +163,12 @@ class WebLogAnalyzer:
         print(f"Total Requests:        {total_requests:,}")
         print(f"Unique IPs:            {unique_ips:,}")
         print(f"Unique URLs:           {unique_urls:,}")
-        print(f"Avg Response Time:     {avg_response_time:.3f}s")
         print(f"{'='*60}")
         
         stats['summary'] = {
             'total_requests': total_requests,
             'unique_ips': unique_ips,
             'unique_urls': unique_urls,
-            'avg_response_time': avg_response_time
         }
         
         return stats

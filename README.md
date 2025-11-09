@@ -185,8 +185,11 @@ anomalies = analyzer.detect_anomalies(
 ```python
 # In log_generator.py
 generator.generate_mixed_traffic(
-    total_requests=50000,
-    attack_ratio=0.3  # 30% attack traffic
+    output_file="log_file.log",
+    num_requests=50000,
+    error_rate=0.8,
+    duration_hours=2,
+    attack_duration_hours=0.333,
 )
 ```
 
