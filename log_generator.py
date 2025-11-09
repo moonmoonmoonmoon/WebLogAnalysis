@@ -177,16 +177,24 @@ class SyntheticLogGenerator:
         time_increment = duration / num_requests
 
         if attack_start_time is None:
-            attack_start_time = start_time + random.uniform(0, duration - attack_duration)
+            # attack_start_time = start_time + random.uniform(0, duration - attack_duration)
+            attack_start_time = start_time + timedelta(
+                seconds=random.uniform(0, duration - attack_duration))
         else:
             assert attack_start_time >= start_time and attack_start_time + attack_duration <= duration
         
         with open(output_file, 'w') as f:
             for i in range(num_requests):
                 current_seconds = i * time_increment
-                current_time = start_time + timedelta(seconds=current_seconds)
-                is_attack = (attack_start_time <= current_seconds <= attack_start_time + attack_duration and random.random() <= error_rate)
+                # current_time = start_time + timedelta(seconds=current_seconds)
+                # is_attack = (attack_start_time <= current_seconds <= attack_start_time + attack_duration and random.random() <= error_rate)
                 
+                current_time = start_time + timedelta(seconds=current_seconds)
+
+                is_attack = (
+                    attack_start_time <= current_time <= attack_start_time + timedelta(seconds=attack_duration)
+                        and random.random() <= error_rate
+                )
                 if is_attack:
                     ip = random.choice(attacker_ips)
                     url = random.choice(['/api/login', '/api/search', '/'])
