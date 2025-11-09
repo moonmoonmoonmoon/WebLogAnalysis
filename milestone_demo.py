@@ -22,11 +22,11 @@ def main():
     os.makedirs('sample_logs', exist_ok=True)
     generator = SyntheticLogGenerator(seed=42)
     
-    # Generate small dataset (10MB)
-    print("\nGenerating normal traffic log (10MB).")
+    # Generate small dataset (5MB)
+    print("\nGenerating normal traffic log (5MB).")
     start = time.time()
     generator.generate_normal_traffic(
-        output_file='sample_logs/web_10mb.log',
+        output_file='sample_logs/web_5mb.log',
         num_requests=50000,
         duration_hours=1,
     )
@@ -94,11 +94,19 @@ def main():
             top_n=20,
             output_file='top_urls.png'
         )
+
+        # Bar Chart: Top IP
+        print("\nCreating top IPs chart...")
+        visualizer.plot_top_ips(
+        stats['top_ips'],
+        top_n=20,
+        output_file='top_ips.png'
+        )       
         
         # Performance chart
-        print("\nCreating parsing performance chart...")
+        print("\nCreating parsing performance chart... (Milestone for 5MB only)")
         # Use actual parsing time
-        file_size_mb = os.path.getsize('sample_logs/web_10mb.log') / (1024 * 1024)
+        file_size_mb = os.path.getsize('sample_logs/web_5mb.log') / (1024 * 1024)
         visualizer.plot_parsing_performance(
             file_sizes_mb=[file_size_mb],
             runtimes_sec=[parse_time],
@@ -116,29 +124,26 @@ def main():
         
         print_header("SUMMARY")
         
-        print("Log Parser - COMPLETED")
-        print(f"  • Implemented PySpark DataFrame parser")
-        print(f"  • Extracts: timestamp, IP, method, URL, status")
-        print(f"  • Processed {df.count():,} log entries")
-        print(f"  • Runtime: {parse_time:.2f}s")
+        print("Log Parser")
+        print(f"Implemented PySpark DataFrame parser")
+        print(f"Extracts: timestamp, IP, method, URL, status")
+        print(f"Processed {df.count():,} log entries")
+        print(f"Runtime: {parse_time:.2f}s")
         
-        print("Basic Analytics - COMPLETED")
-        print(f"  • Top-20 URLs by request count")
-        print(f"  • Top-20 IPs by request count")
-        print(f"  • HTTP status code distribution")
-        print(f"  • Runtime: {analytics_time:.2f}s")
+        print("Basic Analytics")
+        print(f"Top-20 URLs by request count")
+        print(f"Top-20 IPs by request count")
+        print(f"HTTP status code distribution")
+        print(f"Runtime: {analytics_time:.2f}s")
         
-        print("Anomaly Detector - COMPLETED")
-        print(f"  • High-volume IP detection")
-        print(f"  • High error rate detection")
-        print(f"  • Found {anomalies['high_volume_ips'].count()} suspicious IPs")
-        print(f"  • Runtime: {anomaly_time:.2f}s")
+        print("Anomaly Detector")
+        print(f"High-volume IP detection")
+        print(f"High error rate detection")
+        print(f"Found {anomalies['high_volume_ips'].count()} suspicious IPs")
+        print(f"Runtime: {anomaly_time:.2f}s")
         
-        print("Evaluation Charts - COMPLETED")
-        print(f"  • Status code pie chart")
-        print(f"  • Top URLs bar chart")
-        print(f"  • Parsing performance chart")
-        print(f"  • Charts saved to: charts/")
+
+        print(f"Charts saved to: charts/")
         
         print("\n" + "="*70)
         print(f"Total execution time: {parse_time + analytics_time + anomaly_time:.2f}s")
