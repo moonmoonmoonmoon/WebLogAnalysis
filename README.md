@@ -4,16 +4,16 @@ A PySpark-based system for analyzing large-scale web server logs and detecting t
 
 ## Milestone Goals
 
-# Goal 1: Implement a log parser using PySpark DataFrames that processes synthetic/real Web Server logs and extracts necessary fields (e.g., timestamp, IP, method, URL, status, response_time, user_agent). - COMPLETED, log_generator.py
-# Goal 2: Develop analytics functions to compute summary statistics. - COMPLETED, visualizations.py
+#### Goal 1: Implement a log parser using PySpark DataFrames that processes synthetic/real Web Server logs and extracts necessary fields (e.g., timestamp, IP, method, URL, status, response_time, user_agent). - COMPLETED, log_generator.py
+#### Goal 2: Develop analytics functions to compute summary statistics. - COMPLETED, visualizations.py
 - Top-20 URLs by request count
 - Top-20 IPs by request count
 - HTTP status code distribution
-# Goal 3: Create a simple detector to detect abnormal traffic. - COMPLETED, web_log_analyzer.py
+#### Goal 3: Create a simple detector to detect abnormal traffic. - COMPLETED, web_log_analyzer.py
 - High-volume IPs 
 - Sudden spike 
 - Error-rate surge 
-# Goal 4: Generate simple evaluation charts. - COMPLETED, visualizations.py
+#### Goal 4: Generate simple evaluation charts. - COMPLETED, visualizations.py
 - Bar chart: parsing runtime vs file size (10MB, 50MB, 100MB)- PARTIALLY COMPLETED
 - Pie chart: HTTP status code distribution- COMPLETED
 - Table: top-10 anomalous IPs- COMPLETED
@@ -87,11 +87,17 @@ Top 10 Anomalous IPs:
 
 ##  Visualization
 
-Bar chart:  1. Top-20 URLs by request count
-            2. Top-20 IPs by request count
-            3. parsing runtime vs file size (10MB, 50MB, 100MB)
-Pie chart:  4. HTTP status code distribution
-Table:      5. Top-10 anomalous IPs
+**Bar chart**
+- Top-20 URLs by request count  
+- Top-20 IPs by request count  
+- Parsing runtime vs file size (10MB, 50MB, 100MB) *(milestone: 5MB)*
+
+**Pie chart**
+- HTTP status code distribution
+
+**Table**
+- Top-10 anomalous IPs
+
 
 ## Testing
 
@@ -103,7 +109,7 @@ python log_generator.py
 python quick_test.py
 ```
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 - **Apache Spark**: Distributed data processing
 - **PySpark**: Python API for Spark
@@ -111,31 +117,7 @@ python quick_test.py
 - **Pandas**: Data manipulation
 - **Python 3.8+**: Core language
 
-## 📖 API Example
-
-```python
-from web_log_analyzer import WebLogAnalyzer
-
-# Initialize
-analyzer = WebLogAnalyzer("MyAnalysis")
-
-# Parse logs
-df = analyzer.parse_apache_log('logs/*.log')
-
-# Compute statistics
-stats = analyzer.compute_basic_statistics()
-
-# Detect anomalies
-anomalies = analyzer.detect_anomalies(
-    ip_threshold=100,
-    error_rate_threshold=0.3
-)
-
-# Clean up
-analyzer.stop()
-```
-
-## 🔧 Configuration
+##  Configuration
 
 ### Anomaly Detection Thresholds
 
@@ -175,5 +157,4 @@ Included synthetic datasets:
 
 ---
 
-**Note**: This project was developed as part of a graduate-level data science course focusing on distributed systems and large-scale data processing.
-We also used the ChatGPT to help us to work on the project 
+**Note**: This project was developed as part of a graduate-level data science course focusing on distributed systems and large-scale data processing. ChatGPT was also used to help us to work on the project codes. 
