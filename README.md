@@ -4,19 +4,19 @@ A PySpark-based system for analyzing large-scale web server logs and detecting t
 
 ## Milestone Goals
 
--Goal 1: Implement a log parser using PySpark DataFrames that processes synthetic/real Web Server logs and extracts necessary fields (e.g., timestamp, IP, method, URL, status, response_time, user_agent). - COMPLETED
--Goal 2: Develop basic analytics functions to compute basic summary statistics.- COMPLETED
-Top-20 URLs by request count
-Top-20 IPs by request count
-HTTP status code distribution
--Goal 3: Create a simple detector to detect abnormal traffic. - COMPLETED
-High-volume IPs 
-Sudden spike 
-Error-rate surge 
--Goal 4: Generate simple evaluation charts. - PARTIALLY COMPLETED
-Bar chart: parsing runtime vs file size (10MB, 50MB, 100MB)
-Pie chart: HTTP status code distribution
-Table: top-10 anomalous IPs
+# Goal 1: Implement a log parser using PySpark DataFrames that processes synthetic/real Web Server logs and extracts necessary fields (e.g., timestamp, IP, method, URL, status, response_time, user_agent). - COMPLETED, log_generator.py
+# Goal 2: Develop analytics functions to compute summary statistics. - COMPLETED, visualizations.py
+- Top-20 URLs by request count
+- Top-20 IPs by request count
+- HTTP status code distribution
+# Goal 3: Create a simple detector to detect abnormal traffic. - COMPLETED, web_log_analyzer.py
+- High-volume IPs 
+- Sudden spike 
+- Error-rate surge 
+# Goal 4: Generate simple evaluation charts. - COMPLETED, visualizations.py
+- Bar chart: parsing runtime vs file size (10MB, 50MB, 100MB)- PARTIALLY COMPLETED
+- Pie chart: HTTP status code distribution- COMPLETED
+- Table: top-10 anomalous IPs- COMPLETED
 
 
 ## Quick Start
