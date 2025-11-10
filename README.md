@@ -2,15 +2,24 @@
 
 A PySpark-based system for analyzing large-scale web server logs and detecting traffic anomalies in real-time.
 
-## 🎯 Features
+## Milestone Goals
 
-- **Distributed Log Parsing**: Process millions of log entries using Apache Spark
-- **Real-time Analytics**: Compute traffic statistics (top URLs, IPs, status codes)
-- **Anomaly Detection**: Identify suspicious traffic patterns including DDoS attacks
-- **Visualization**: Generate professional charts and reports
-- **Synthetic Data**: Built-in log generator for testing and development
+-Goal 1: Implement a log parser using PySpark DataFrames that processes synthetic/real Web Server logs and extracts necessary fields (e.g., timestamp, IP, method, URL, status, response_time, user_agent). - COMPLETED
+-Goal 2: Develop basic analytics functions to compute basic summary statistics.- COMPLETED
+Top-20 URLs by request count
+Top-20 IPs by request count
+HTTP status code distribution
+-Goal 3: Create a simple detector to detect abnormal traffic. - COMPLETED
+High-volume IPs 
+Sudden spike 
+Error-rate surge 
+-Goal 4: Generate simple evaluation charts. - PARTIALLY COMPLETED
+Bar chart: parsing runtime vs file size (10MB, 50MB, 100MB)
+Pie chart: HTTP status code distribution
+Table: top-10 anomalous IPs
 
-## 🚀 Quick Start
+
+## Quick Start
 
 ### Prerequisites
 
@@ -38,47 +47,11 @@ python log_generator.py
 # Run complete demo
 python milestone_demo.py
 
-# Or run quick test
+# Run quick test
 python quick_test.py
 ```
 
-## 📊 Performance
-
-- **Processing Speed**: 17,000+ entries/second
-- **Scalability**: Handles datasets from MB to GB scale
-- **Efficiency**: Processes 80K logs in under 5 seconds
-
-## 🏗️ Architecture
-
-```
-┌─────────────────────────────────────┐
-│      Web Server Logs                │
-│   (Apache/Nginx format)             │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│    PySpark Log Parser               │
-│  (Regex-based extraction)           │
-└──────────────┬──────────────────────┘
-               │
-               ▼
-┌─────────────────────────────────────┐
-│   Distributed Processing            │
-│  • Analytics  • Aggregation         │
-└──────────────┬──────────────────────┘
-               │
-       ┌───────┴────────┐
-       ▼                ▼
-┌─────────────┐  ┌──────────────┐
-│  Analytics  │  │   Anomaly    │
-│  • Top URLs │  │   Detection  │
-│  • Top IPs  │  │  • High Vol  │
-│  • Status   │  │  • Errors    │
-└─────────────┘  └──────────────┘
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
 WebLogAnalysis/
@@ -92,18 +65,17 @@ WebLogAnalysis/
     └── web_mixed.log
 ```
 
-## 🔍 Analysis Capabilities
+## Analysis Capabilities
 
 ### Basic Analytics
 - Top-N URLs by request count
 - Top-N IPs by request count
 - HTTP status code distribution
-- Traffic volume over time
 
 ### Anomaly Detection
-- **High-Volume IPs**: Detects potential DDoS sources
-- **Error Rate Surge**: Identifies attack patterns (100% error rate)
-- **Configurable Thresholds**: Adjust sensitivity based on requirements
+- High-Volume IPs: Detects potential DDoS sources
+- Error Rate Surge: Identifies attack patterns (100% error rate)
+- Configurable Thresholds: Adjust sensitivity based on requirements
 
 ### Example Output
 ```
@@ -113,15 +85,15 @@ Top 10 Anomalous IPs:
   77.124.250.162   → 205 requests, 100% error rate
 ```
 
-## 📈 Visualization
+##  Visualization
 
-The system generates publication-quality charts:
-- HTTP Status Distribution (Pie Chart)
-- Top URLs/IPs (Bar Chart)
-- Performance Analysis (Line/Bar Chart)
-- Anomalous Traffic Tables
+Bar chart:  1. Top-20 URLs by request count
+            2. Top-20 IPs by request count
+            3. parsing runtime vs file size (10MB, 50MB, 100MB)
+Pie chart:  4. HTTP status code distribution
+Table:      5. Top-10 anomalous IPs
 
-## 🧪 Testing
+## Testing
 
 ```bash
 # Generate test data
@@ -130,11 +102,6 @@ python log_generator.py
 # Run tests
 python quick_test.py
 ```
-
-**Test Results:**
-- ✅ Log Parser: 2.3s for 50K entries
-- ✅ Analytics: 1.5s
-- ✅ Anomaly Detection: 0.8s
 
 ## 🛠️ Technology Stack
 
@@ -193,35 +160,20 @@ generator.generate_mixed_traffic(
 )
 ```
 
-## 📊 Sample Datasets
+##  Sample Datasets
 
 Included synthetic datasets:
-- **web_10mb.log**: 50K normal traffic entries (4.4 MB)
+- **web_5mb.log**: 50K normal traffic entries (4.2 MB)
 - **web_mixed.log**: 30K mixed traffic with simulated DDoS (2.6 MB)
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
-
-## 📄 License
-
-MIT License
-
-## 👥 Authors
+## Authors
 
 - Weidong Wang
 - Yanan Zhang
 - Yuxin Sun
 - Zhehuan Chen
 
-## 🔗 Links
-
-- Course: Systems for Data Science
-- Institution: UMass Amherst
-
 ---
 
 **Note**: This project was developed as part of a graduate-level data science course focusing on distributed systems and large-scale data processing.
+We also used the ChatGPT to help us to work on the project 
