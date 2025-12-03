@@ -1,0 +1,29 @@
+[
+  {
+    "partition": "ip-hash",
+    "cache": "none",
+    "rows": 3084047,
+    "parse_time": 1.0,
+    "agg_time": 4.01,
+    "anomaly_time": 1.02,
+    "total_time": 6.03
+  },
+  {
+    "partition": "ip-hash",
+    "cache": "cache",
+    "rows": 3084047,
+    "parse_time": 2.77,
+    "agg_time": 0.36,
+    "anomaly_time": 0.21,
+    "total_time": 3.34
+  },
+  {
+    "partition": "ip-hash",
+    "cache": "persist",
+    "rows": 3084047,
+    "parse_time": 2.8,
+    "agg_time": 0.39,
+    "anomaly_time": 0.23,
+    "total_time": 3.42
+  }
+]

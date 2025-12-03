@@ -1,0 +1,20 @@
+[
+  {
+    "partition": "default",
+    "cache": "cache",
+    "rows": 6168094,
+    "parse_time": 6.14,
+    "agg_time": 1.07,
+    "anomaly_time": 0.83,
+    "total_time": 8.04
+  },
+  {
+    "partition": "ip-hash",
+    "cache": "cache",
+    "rows": 6168094,
+    "parse_time": 5.77,
+    "agg_time": 0.65,
+    "anomaly_time": 0.44,
+    "total_time": 6.86
+  }
+]

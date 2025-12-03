@@ -1,0 +1,26 @@
+# Large datasets
+datasets/*.log
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Jupyter
+.ipynb_checkpoints
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Spark
+metastore_db/
+spark-warehouse/
+derby.log
