@@ -31,8 +31,8 @@ python generate_charts.py     # Generate visualizations
 
 ### Key Results
 - **Scalability:** Linear scaling from 100MB (5s) to 1GB (14s)
-- **Partitioning:** IP-hash 13% faster than default for IP-heavy queries
-- **Caching:** persist() 43% faster than no caching for repeated queries
+- **Partitioning:** IP-hash 3% faster than default on 1GB dataset
+- **Caching:** cache() and persist() both ~29% faster than no caching on 1GB dataset
 
 ### Files
 - `run_all.py` - Master pipeline script

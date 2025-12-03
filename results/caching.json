@@ -2,28 +2,28 @@
   {
     "partition": "ip-hash",
     "cache": "none",
-    "rows": 3084047,
-    "parse_time": 1.0,
-    "agg_time": 4.01,
-    "anomaly_time": 1.02,
-    "total_time": 6.03
+    "rows": 12336188,
+    "parse_time": 3.42,
+    "agg_time": 14.21,
+    "anomaly_time": 4.27,
+    "total_time": 21.9
   },
   {
     "partition": "ip-hash",
     "cache": "cache",
-    "rows": 3084047,
-    "parse_time": 2.77,
-    "agg_time": 0.36,
-    "anomaly_time": 0.21,
-    "total_time": 3.34
+    "rows": 12336188,
+    "parse_time": 11.82,
+    "agg_time": 2.59,
+    "anomaly_time": 1.23,
+    "total_time": 15.65
   },
   {
     "partition": "ip-hash",
     "cache": "persist",
-    "rows": 3084047,
-    "parse_time": 2.8,
-    "agg_time": 0.39,
-    "anomaly_time": 0.23,
-    "total_time": 3.42
+    "rows": 12336188,
+    "parse_time": 11.94,
+    "agg_time": 2.27,
+    "anomaly_time": 1.26,
+    "total_time": 15.48
   }
 ]

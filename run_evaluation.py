@@ -125,7 +125,7 @@ def main():
     
     # Goal 3 & 6: Partitioning comparison
     print("\n[Goal 3 & 6] Partitioning Strategies")
-    test_file = 'datasets/web_500mb.log' if os.path.exists('datasets/web_500mb.log') else 'datasets/web_100mb.log'
+    test_file = 'datasets/web_1000mb.log' if os.path.exists('datasets/web_1000mb.log') else 'datasets/web_500mb.log'
     partitioning = []
     # Compare only 2 strategies: default vs IP-hash
     # This clearly shows the benefit of aligning partition key with query pattern
@@ -140,7 +140,7 @@ def main():
     
     # Goal 4: Caching comparison
     print("\n[Goal 4] Caching Strategies")
-    test_file = 'datasets/web_250mb.log' if os.path.exists('datasets/web_250mb.log') else 'datasets/web_100mb.log'
+    test_file = 'datasets/web_1000mb.log' if os.path.exists('datasets/web_1000mb.log') else 'datasets/web_500mb.log'
     caching = []
     for strategy in [None, 'cache', 'persist']:
         print(f"  Testing {strategy or 'none'}...")
