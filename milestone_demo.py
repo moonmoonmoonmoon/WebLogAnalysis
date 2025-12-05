@@ -1,6 +1,7 @@
 import time
 import os
 import sys
+import argparse
 
 
 def print_header(title):
@@ -98,9 +99,9 @@ def main():
         # Bar Chart: Top IP
         print("\nCreating top IPs chart...")
         visualizer.plot_top_ips(
-        stats['top_ips'],
-        top_n=20,
-        output_file='top_ips.png'
+            stats['top_ips'],
+            top_n=20,
+            output_file='top_ips.png'
         )       
         
         # Performance chart

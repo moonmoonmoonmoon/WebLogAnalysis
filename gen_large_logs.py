@@ -5,6 +5,7 @@ CHANGES: Added support for 100MB-1GB datasets with multiple attack periods
 import random
 from datetime import datetime, timedelta
 import os
+import argparse
 
 class LogGenerator:
     def __init__(self, seed=42):
@@ -79,11 +80,16 @@ class LogGenerator:
         print(f"\n  ✓ Generated {output_file}: {actual_mb:.1f}MB ({num_requests:,} records)")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Generate large logs')
+    parser.add_argument('--sizes', type=int, nargs='+', default=[100, 250, 500, 1000], help='Sizes in MB')
+    args = parser.parse_args()
+    sizes = args.sizes
+
     os.makedirs('datasets', exist_ok=True)
     gen = LogGenerator()
     
     # Generate datasets for Goal 1 and Goal 5
-    for size in [100, 250, 500, 1000]:
+    for size in sizes:
         gen.generate_dataset(
             f'datasets/web_{size}mb.log',
             target_mb=size,

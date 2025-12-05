@@ -4,10 +4,11 @@ Quick Test Script - Demonstrates core functionality
 
 from web_log_analyzer import WebLogAnalyzer
 import time
+import argparse
 
-print("""
-    Quick Functionality Test 
-""")
+parser = argparse.ArgumentParser(description='Quick test script')
+parser.add_argument('--log_file', type=str, default='sample_logs/web_10mb.log', help='Path to log file')
+args = parser.parse_args()
 
 # Initialize
 analyzer = WebLogAnalyzer("QuickTest")
@@ -16,7 +17,7 @@ try:
     # Test parsing
     print("\n[TEST 1] Parsing logs.")
     start = time.time()
-    df = analyzer.parse_apache_log('sample_logs/web_10mb.log')
+    df = analyzer.parse_apache_log(args.log_file)
     parse_time = time.time() - start
     print(f" PASS - Parsed in {parse_time:.2f}s")
     

@@ -12,6 +12,7 @@ from pyspark.storagelevel import StorageLevel
 import time
 import json
 import os
+import argparse
 
 class Evaluator:
     def __init__(self):
@@ -26,7 +27,6 @@ class Evaluator:
             .getOrCreate()
         self.spark.sparkContext.setLogLevel("ERROR")
     
-    # CHANGE: Added partitioning and caching parameters
     def run_experiment(self, log_path, partition_strategy=None, cache_strategy=None):
         """Run single experiment with specified strategies"""
         start_total = time.time()
@@ -48,15 +48,11 @@ class Evaluator:
         df = df.withColumn('timestamp', to_timestamp(col('timestamp_str'), 'dd/MMM/yyyy:HH:mm:ss Z'))
         df = df.withColumn('hour', hour('timestamp'))
         
-        # CHANGE: Apply partitioning strategy (Goal 3)
-        # Query pattern: 2x groupBy('ip'), 1x groupBy('url'), 1x groupBy('hour')
-        # IP-hash should be fastest since we have 2 IP queries (most frequent)
         if partition_strategy == 'ip-hash':
-            df = df.repartition(8, 'ip')  # Optimizes IP queries (no shuffle for IP groupBys)
+            df = df.repartition(8, 'ip')
         else:
-            df = df.repartition(8)  # Default: round-robin distribution (shuffle for all groupBys)
+            df = df.repartition(8)
         
-        # CHANGE: Apply caching strategy (Goal 4)
         if cache_strategy == 'cache':
             df = df.cache()
         elif cache_strategy == 'persist':
@@ -96,70 +92,65 @@ class Evaluator:
     def stop(self):
         self.spark.stop()
 
-# CHANGE: Main evaluation for Goals 3, 4, 5, 6
+# Main evaluation for Goals 3, 4, 5, 6
 def main():
+    parser = argparse.ArgumentParser(description='Run evaluation')
+    parser.add_argument('--sizes', type=int, nargs='+', default=[100, 250, 500, 1000], help='Sizes in MB')
+    parser.add_argument('--partition_file', type=str, default="datasets/web_1000mb.log", help='Partition Strategy test file.')
+    parser.add_argument('--caching_file', type=str, default="datasets/web_1000mb.log", help='Caching Strategy test file.')
+    args = parser.parse_args()
+    sizes = args.sizes
+
     os.makedirs('results', exist_ok=True)
     ev = Evaluator()
     
-    print("="*60)
-    print("FINAL PROJECT EVALUATION")
-    print("="*60)
-    
-    # Goal 5: Scalability analysis
-    print("\n[Goal 5] Scalability Analysis")
+    # Scalability test
+    print("\n[Goal 5] Scalability analysis...")
     scalability = []
-    for size in [100, 250, 500, 1000]:
+    for size in sizes:
         log_file = f'datasets/web_{size}mb.log'
         if not os.path.exists(log_file):
-            print(f"  ⚠ {log_file} not found, skipping")
+            print(f"  Skipping {log_file} (not found)")
             continue
-        print(f"  Testing {size}MB...")
-        # Use IP-hash since it matches our query pattern (2 IP groupBys)
+        print(f"  {size}MB: ", end='', flush=True)
         result = ev.run_experiment(log_file, partition_strategy='ip-hash', cache_strategy='cache')
         result['size_mb'] = size
         scalability.append(result)
-        print(f"    Parse: {result['parse_time']}s, Total: {result['total_time']}s")
+        print(f"{result['total_time']}s")
     
     with open('results/scalability.json', 'w') as f:
         json.dump(scalability, f, indent=2)
     
-    # Goal 3 & 6: Partitioning comparison
-    print("\n[Goal 3 & 6] Partitioning Strategies")
-    test_file = 'datasets/web_1000mb.log' if os.path.exists('datasets/web_1000mb.log') else 'datasets/web_500mb.log'
+    # Partitioning comparison
+    print("\n[Goal 3 & 6] Partitioning Strategies...")
+    test_file = args.partition_file
     partitioning = []
-    # Compare only 2 strategies: default vs IP-hash
-    # This clearly shows the benefit of aligning partition key with query pattern
     for strategy in [None, 'ip-hash']:
-        print(f"  Testing {strategy or 'default'}...")
+        name = strategy or 'default'
+        print(f"  {name}: ", end='', flush=True)
         result = ev.run_experiment(test_file, partition_strategy=strategy, cache_strategy='cache')
         partitioning.append(result)
-        print(f"    Parse: {result['parse_time']}s, Agg: {result['agg_time']}s, Total: {result['total_time']}s")
+        print(f"{result['total_time']}s")
     
     with open('results/partitioning.json', 'w') as f:
         json.dump(partitioning, f, indent=2)
     
-    # Goal 4: Caching comparison
-    print("\n[Goal 4] Caching Strategies")
-    test_file = 'datasets/web_1000mb.log' if os.path.exists('datasets/web_1000mb.log') else 'datasets/web_500mb.log'
+    # Caching comparison
+    print("\n[Goal 4] Caching strategies...")
+    test_file = args.caching_file
     caching = []
     for strategy in [None, 'cache', 'persist']:
-        print(f"  Testing {strategy or 'none'}...")
-        # Use IP-hash partitioning for all caching tests (consistent baseline)
+        name = strategy or 'none'
+        print(f"  {name}: ", end='', flush=True)
         result = ev.run_experiment(test_file, partition_strategy='ip-hash', cache_strategy=strategy)
         caching.append(result)
-        print(f"    Parse: {result['parse_time']}s, Agg: {result['agg_time']}s, Total: {result['total_time']}s")
+        print(f"{result['total_time']}s")
     
     with open('results/caching.json', 'w') as f:
         json.dump(caching, f, indent=2)
     
     ev.stop()
-    
-    print("\n" + "="*60)
-    print("✓ Evaluation complete. Results in results/")
-    print("  - scalability.json (Goal 5)")
-    print("  - partitioning.json (Goal 3 & 6)")
-    print("  - caching.json (Goal 4)")
-    print("="*60)
+    print("\nDone. Results saved to results/")
 
 if __name__ == "__main__":
     main()

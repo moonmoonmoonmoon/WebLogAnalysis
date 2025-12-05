@@ -75,10 +75,11 @@ Requirements: Python 3.8+, Apache Spark 3.x, Java 8+
 ### Usage
 
 ```bash
-# Milestone demos
-python milestone_demo.py      # Complete demo
-python quick_test.py         # Quick test
-python log_generator.py      # Generate sample logs
+python milestone_demo.py    # Run milestone demo
+python run_all.py           # Run full pipeline
+
+python log_generator.py      # Generate sample logs (Optional)
+python quick_test.py --log_file [log_file]      # Quick test for a log file
 ```
 
 ### Project Structure
