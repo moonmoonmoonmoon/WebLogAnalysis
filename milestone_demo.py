@@ -56,7 +56,7 @@ def main():
     
     try:
         start = time.time()
-        df = analyzer.parse_apache_log('sample_logs/*.log')
+        df = analyzer.parse_apache_log('sample_logs/web_5mb.log')
         parse_time = time.time() - start
         print(f"\nParsing completed in {parse_time:.2f}s")
         
