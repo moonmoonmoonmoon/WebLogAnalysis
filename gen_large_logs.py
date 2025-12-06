@@ -77,7 +77,7 @@ class LogGenerator:
                     print(f"  {(i+1)/num_requests*100:.1f}%", end='\r')
         
         actual_mb = os.path.getsize(output_file) / (1024 * 1024)
-        print(f"\n  ✓ Generated {output_file}: {actual_mb:.1f}MB ({num_requests:,} records)")
+        print(f"\nGenerated {output_file}: {actual_mb:.1f}MB ({num_requests:,} records)")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Generate large logs')
@@ -97,4 +97,4 @@ if __name__ == "__main__":
             num_attacks=2 + (size // 250)
         )
     
-    print("\n✓ All datasets generated in datasets/")
+    print("\nAll datasets generated in datasets/")

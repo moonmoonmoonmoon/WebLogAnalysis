@@ -116,7 +116,7 @@ def main():
         result = ev.run_experiment(log_file, partition_strategy='ip-hash', cache_strategy='cache')
         result['size_mb'] = size
         scalability.append(result)
-        print(f"{result['total_time']}s")
+        print(f"Parse: {result['parse_time']}s, Total: {result['total_time']}s")
     
     with open('results/scalability.json', 'w') as f:
         json.dump(scalability, f, indent=2)
@@ -130,7 +130,7 @@ def main():
         print(f"  {name}: ", end='', flush=True)
         result = ev.run_experiment(test_file, partition_strategy=strategy, cache_strategy='cache')
         partitioning.append(result)
-        print(f"{result['total_time']}s")
+        print(f"Parse: {result['parse_time']}s, Agg: {result['agg_time']}s, Total: {result['total_time']}s")
     
     with open('results/partitioning.json', 'w') as f:
         json.dump(partitioning, f, indent=2)
@@ -144,7 +144,7 @@ def main():
         print(f"  {name}: ", end='', flush=True)
         result = ev.run_experiment(test_file, partition_strategy='ip-hash', cache_strategy=strategy)
         caching.append(result)
-        print(f"{result['total_time']}s")
+        print(f"Parse: {result['parse_time']}s, Agg: {result['agg_time']}s, Total: {result['total_time']}s")
     
     with open('results/caching.json', 'w') as f:
         json.dump(caching, f, indent=2)

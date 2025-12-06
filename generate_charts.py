@@ -41,7 +41,7 @@ def plot_scalability():
     
     plt.tight_layout()
     plt.savefig('charts/goal5_scalability.png', dpi=300, bbox_inches='tight')
-    print("✓ Goal 5 chart: charts/goal5_scalability.png")
+    print("Goal 5 chart: charts/goal5_scalability.png")
 
 def plot_partitioning():
     """Goal 6: Partitioning comparison"""
@@ -77,7 +77,7 @@ def plot_partitioning():
     
     plt.tight_layout()
     plt.savefig('charts/goal6_partitioning.png', dpi=300, bbox_inches='tight')
-    print("✓ Goal 6 chart: charts/goal6_partitioning.png")
+    print("Goal 6 chart: charts/goal6_partitioning.png")
 
 def plot_caching():
     """Goal 4: Caching comparison"""
@@ -107,7 +107,7 @@ def plot_caching():
     
     plt.tight_layout()
     plt.savefig('charts/goal4_caching.png', dpi=300, bbox_inches='tight')
-    print("✓ Goal 4 chart: charts/goal4_caching.png")
+    print("Goal 4 chart: charts/goal4_caching.png")
 
 if __name__ == "__main__":
     os.makedirs('charts', exist_ok=True)
@@ -117,4 +117,4 @@ if __name__ == "__main__":
     plot_partitioning()
     plot_caching()
     
-    print("\n✓ All charts generated in charts/")
+    print("\nAll charts generated in charts/")
